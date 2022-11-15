@@ -1,0 +1,36 @@
+# set the plaform to arm-qemu, arm-bbb, etc.
+PLATFORM=arm-qemu
+
+# COMPILER_ROOT and LIBGCC_LOC are for the appropriate compiler
+#  - the cross compiler when building for ARM or gcc for x86
+# CONF_LFLAGS is for the config program in $XINU_HOME/config
+# Uncomment the appropriate variables for your environment
+#  and comment or delete the other ones.
+
+# For SICE Linux machines
+# - silo.luddy.indiana.edu
+# - tank.luddy.indiana.edu
+COMPILER_ROOT   =      $(shell which arm-none-eabi-gcc | sed 's|gcc$$||')
+LIBGCC_LOC      =      $(shell arm-none-eabi-gcc -print-libgcc-file-name | sed 's|/libgcc.a$$||')
+CONF_LFLAGS = -lfl
+
+# x86 compiler in the VM
+# PLATFORM=x86-galileo
+# COMPILER_ROOT   =      /usr/bin/
+# LIBGCC_LOC      =      /usr/lib/gcc/i686-linux-gnu/4.8.4
+
+# For the Linux VM
+# COMPILER_ROOT   =      /usr/bin/arm-none-eabi-
+# LIBGCC_LOC      =      /usr/lib/gcc/arm-none-eabi/$(shell arm-none-eabi-gcc -dumpversion)
+# CONF_LFLAGS = -lfl
+
+# For Macports on macOS
+# COMPILER_ROOT   =      /opt/local/bin/arm-none-eabi-
+# LIBGCC_LOC      =      /opt/local/lib/gcc/arm-none-eabi/9.2.0/
+# CONF_LFLAGS = -L/opt/local/lib -lfl
+
+# For Homebrew on macOS (deal with x86 vs M1 paths)
+# HOMEBREW_PREFIX := $(shell brew config | grep HOMEBREW_PREFIX | awk '{print$$2}')
+# COMPILER_ROOT    =      /Applications/ARM/bin/arm-none-eabi-
+# LIBGCC_LOC       =      /Applications/ARM/lib/gcc/arm-none-eabi/10.3.1
+# CONF_LFLAGS      = -L$(HOMEBREW_PREFIX)/opt/flex/lib -lfl
